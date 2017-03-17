@@ -17,7 +17,6 @@ require "dotenv/load"
 require "minitest/autorun"
 require "slack"
 require "airrecord"
-require 'active_support/all'
 
 class ChannelList < Airrecord::Table
   self.base_key   = ENV['AIRTABLE_APP']
