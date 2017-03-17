@@ -32,7 +32,6 @@ Gem::Specification.new do |spec|
   spec.add_dependency "pay_dirt"
 
   spec.add_dependency "airrecord"
-  spec.add_dependency "activesupport"
   spec.add_dependency "slack-ruby-client"
 
   spec.add_development_dependency "bundler", "~> 1.14"
