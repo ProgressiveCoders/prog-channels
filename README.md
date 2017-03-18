@@ -1,5 +1,7 @@
 # Prog::Channels
 
+[![Code Climate](https://codeclimate.com/github/ProgressiveCoders/prog-channels/badges/gpa.svg)](https://codeclimate.com/github/ProgressiveCoders/prog-channels)
+
 This repo includes a ruby gem providing an empty `Prog::Channels` class. The only code written so far is in `credentials_test.rb`
 
 ## Usage
