@@ -37,9 +37,27 @@ class CredentialsTest < Minitest::Test
 
   def assert_slack
     assert @slack_client.auth_test.ok = true
+
+    assert_equal %w{
+      created
+      creator
+      id
+      is_archived
+      is_channel
+      is_general
+      is_member
+      members
+      name
+      name_normalized
+      num_members
+      previous_names
+      purpose
+      topic
+    }, @slack_client.channels_list.channels[0].keys.sort
   end
 
   def assert_airtable
     assert ChannelList.records.count >= 1
+    refute_empty ChannelList.all(filter: '{Channel Name} = "thanks"')
   end
 end
