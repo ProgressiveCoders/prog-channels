@@ -38,6 +38,7 @@ module Prog
                 "Status"           => "Active",
                 "Channel Purpose"  => channel[:purpose][:value],
                 "Last Activity"    => Time.at(channel_details.last_read.to_f).strftime("%m/%d/%Y"),
+                "Channel Topic"    => channel_details.topic.value,
               })
 
               new_channel.create
@@ -52,6 +53,9 @@ module Prog
               existing_channel["Channel Purpose"]  = channel[:purpose][:value]
               existing_channel["Status"]           = "Archived" if channel[:is_archived]
               existing_channel["Last Activity"]    = Time.at(channel_details.last_read.to_f).strftime("%m/%d/%Y")
+              existing_channel["Channel Topic"]    = channel_details.topic.value
+
+              existing_channel.save
             else
               # just warn?
             end

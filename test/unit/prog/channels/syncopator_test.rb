@@ -38,7 +38,6 @@ describe Prog::Channels::Syncopator do
       @slack_channel_list_item.expect(:[], "123456789", [:id])
       @params[:slack_client].expect(:channels_info, @channel_info = MiniTest::Mock.new, [{channel: "123456789"}])
       @channel_info.expect(:channel, @channel = MiniTest::Mock.new)
-      @channel.expect(:last_read, Time.now.to_i)
       @airtable_match.expect(:id, "rec123")
       @params[:table].expect(:find, @existing_record = MiniTest::Mock.new, ["rec123"])
 
@@ -61,8 +60,14 @@ describe Prog::Channels::Syncopator do
       @slack_channel_list_item.expect(:[], true, [:is_archived])
       @existing_record.expect(:[]=, "Archived", ["Status", "Archived"])
 
-      @slack_channel_list_item.expect(:[], "12345jfjf", [:id])
+      @channel.expect(:last_read, time.to_i)
       @existing_record.expect(:[]=, "", ["Last Activity", time.strftime("%m/%d/%Y")])
+
+      @channel.expect(:topic, @topic = MiniTest::Mock.new)
+      @topic.expect(:value, "Something topical")
+      @existing_record.expect(:[]=, "", ["Channel Topic", "Something topical"])
+
+      @existing_record.expect(:save, true)
 
       result = @subject.new(@params).call
       result.successful?.must_equal true
@@ -82,7 +87,9 @@ describe Prog::Channels::Syncopator do
       @params[:table].expect(:all, [], [{filter: '{Channel Name} = "thanks"'}])
       @params[:slack_client].expect(:channels_info, @channel_info = MiniTest::Mock.new, [{channel: "123456789"}])
       @channel_info.expect(:channel, @channel = MiniTest::Mock.new)
-      @channel.expect(:last_read, Time.now.to_i)
+      @channel.expect(:last_read, time.to_i)
+      @channel.expect(:topic, @topic = MiniTest::Mock.new)
+      @topic.expect(:value, "Something topical")
 
       @params[:table].expect(:new, @new_record = MiniTest::Mock.new, [{
         "Channel Name"    => "thanks",
@@ -90,7 +97,8 @@ describe Prog::Channels::Syncopator do
         "Membership"      => 2020,
         "Status"          => "Active",
         "Channel Purpose" => "To rage against the dying of the light",
-        "Last Activity"   => time.strftime("%m/%d/%Y")
+        "Last Activity"   => time.strftime("%m/%d/%Y"),
+        "Channel Topic"   => "Something topical",
       }])
       @new_record.expect(:create, true)
 
