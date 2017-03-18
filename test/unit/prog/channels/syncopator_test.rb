@@ -10,7 +10,6 @@ describe Prog::Channels::Syncopator do
 
     # Airtable expectations
     @params[:table].expect(:kind_of?,     true, [Airrecord::Table])
-    @params[:table].expect(:all, [@airtable_matches = MiniTest::Mock.new], [{filter: '{Channel Name} = "thanks"'}])
 
     # Slack client expectations
     @params[:slack_client].expect(:is_a?, true, [Slack::Web::Client])
@@ -33,8 +32,56 @@ describe Prog::Channels::Syncopator do
     end
   end
 
-  describe "as an instance" do
-    it "executes successfully" do
+  describe "when updating" do
+    it "executes successfully when updating" do
+      @params[:table].expect(:all, [@airtable_match = MiniTest::Mock.new], [{filter: '{Channel Name} = "thanks"'}])
+      @airtable_match.expect(:id, "rec123")
+      @params[:table].expect(:find, @existing_record = MiniTest::Mock.new, ["rec123"])
+
+      time = Time.now
+      @slack_channel_list_item.expect(:[], "thanks", [:name])
+      @slack_channel_list_item.expect(:[], time, [:created])
+      @slack_channel_list_item.expect(:[], 2020, [:num_members])
+      @slack_channel_list_item.expect(:[], true, [:is_archived])
+
+      @existing_record.expect(:[]=, "thanks", ["ZChannel Name", "thanks"])
+      @existing_record.expect(:[]=, "thanks", ["ZCreation Date", time.strftime("%Y-%m-%d")])
+      @existing_record.expect(:[]=, "thanks", ["ZMembership Range", 2020])
+      @existing_record.expect(:[]=, "thanks", ["ZStatus", "Archived"])
+
+      result = @subject.new(@params).call
+      result.successful?.must_equal true
+      result.must_be_kind_of PayDirt::Result
+    end
+  end
+
+  describe "when creating" do
+    it "executes successfully when creating" do
+      time = Time.now
+      @slack_channel_list_item.expect(:[], "thanks", [:name])
+      @slack_channel_list_item.expect(:[], time, [:created])
+      @slack_channel_list_item.expect(:[], 2020, [:num_members])
+
+      @params[:table].expect(:all, [], [{filter: '{Channel Name} = "thanks"'}])
+      @params[:table].expect(:new, @new_record = MiniTest::Mock.new, [{
+        "ZChannel Name"     => "thanks",
+        "ZCreation Date"    => time.strftime("%Y-%m-%d"),
+        "ZMembership Range" => 2020,
+        "ZChannel Type"     => "New",
+        "ZStatus"           => "Active",
+      }])
+      @new_record.expect(:create, true)
+
+      result = @subject.new(@params).call
+      result.successful?.must_equal true
+      result.must_be_kind_of PayDirt::Result
+    end
+  end
+
+  describe "when freaking out" do
+    it "executes successfully when freaking out" do
+      @params[:table].expect(:all, [0, 1], [{filter: '{Channel Name} = "thanks"'}])
+
       result = @subject.new(@params).call
       result.successful?.must_equal true
       result.must_be_kind_of PayDirt::Result

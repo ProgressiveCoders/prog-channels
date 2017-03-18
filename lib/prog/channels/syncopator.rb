@@ -24,13 +24,29 @@ module Prog
 
         def syncopate
           @slack_client.channels_list.channels.each do |channel|
-            match = @table.all({filter: "{Channel Name} = \"#{channel[:name]}\""})
+            matches = @table.all({filter: "{Channel Name} = \"#{channel[:name]}\""})
 
-            case match.length
+            case matches.length
             when 0
               # create new record
+
+              new_channel = @table.new({
+                "ZChannel Name"     => channel[:name],
+                "ZCreation Date"    => Time.at(channel[:created]).strftime("%Y-%m-%d"),
+                "ZMembership Range" => channel[:num_members],
+                "ZChannel Type"     => "New",
+                "ZStatus"           => "Active",
+              })
+
+              new_channel.create
             when 1
               # update existing record
+
+              existing_channel = @table.find(matches[0].id)
+              existing_channel["ZChannel Name"]     = channel[:name]
+              existing_channel["ZCreation Date"]    = Time.at(channel[:created]).strftime("%Y-%m-%d")
+              existing_channel["ZMembership Range"] = channel[:num_members]
+              existing_channel["ZStatus"]           = "Archived" if channel[:is_archived]
             else
               # just warn?
             end
