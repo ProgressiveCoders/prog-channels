@@ -13,8 +13,8 @@ gemfile(true) do
   gem "prog-channels", path: "."
 end
 
-require "dotenv/load"
 require "minitest/autorun"
+require "dotenv/load"
 require "slack"
 require "airrecord"
 
@@ -36,7 +36,7 @@ class CredentialsTest < Minitest::Test
   end
 
   def assert_slack
-    assert @slack_client.auth_test.ok = true
+    assert_equal true, @slack_client.auth_test.ok
 
     assert_equal %w{
       created
