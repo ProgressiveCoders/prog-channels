@@ -8,9 +8,11 @@ Copy `.env.example` to `.env` and ensure you update it with real credentials.
 
 Next run `bundle exec rake test` to ensure all systems are go.
 
-Caveat Emptor: Totally untested (other than the unit and integration tests).
-
 Finally, `bin/sync` oughta do something fun with slack and airtable.
+
+There's also a rake task that will simply run `bin/sync`:
+
+    rake prog:channels:sync
 
 ## Testing
 
@@ -27,7 +29,9 @@ Unit tests run against mocks and don't touch either API.
 
 ## Development
 
-Goal: use the slack gem to get channel lists and info, then use the airtable gem (airrecord) to update the Airtable document with latest info.
+First Goal: use the slack gem to get channel lists and info, then use the airtable gem (airrecord) to update the Airtable document with latest info. :check:
+
+Next Goals: clean it up; document or automate deployment steps; automate build; release a rubygem(?); have fun :)
 
 ## Contributing
 
