@@ -7,35 +7,21 @@ end
 
 gemfile(true) do
   source "https://rubygems.org"
-  gem "dotenv"
   gem "pry"
 
   gem "prog-channels", path: "."
 end
 
+require "prog/channels"
 require "minitest/autorun"
-require "dotenv/load"
-require "slack"
-require "airrecord"
-
-class ChannelList < Airrecord::Table
-  self.base_key   = ENV['AIRTABLE_APP']
-  self.table_name = "Channel List"
-end
-
 
 class CredentialsTest < Minitest::Test
   def setup
-    @slack_client = Slack::Web::Client.new(token: ENV['SLACK_API_TOKEN'])
+    @slack_client     = Slack::Web::Client.new(token: ENV['SLACK_API_TOKEN'])
     Airrecord.api_key = ENV['AIRTABLE_KEY']
   end
 
-  def test_stuff
-    assert_slack
-    assert_airtable
-  end
-
-  def assert_slack
+  def test_slack
     assert_equal true, @slack_client.auth_test.ok
 
     assert_equal %w{
@@ -56,8 +42,8 @@ class CredentialsTest < Minitest::Test
     }, @slack_client.channels_list.channels[0].keys.sort
   end
 
-  def assert_airtable
-    assert ChannelList.records.count >= 1
-    refute_empty ChannelList.all(filter: '{Channel Name} = "thanks"')
+  def test_airtable
+    assert Prog::Channels::ChannelList.records.count >= 1
+    refute_empty Prog::Channels::ChannelList.all(filter: '{Channel Name} = "thanks"')
   end
 end

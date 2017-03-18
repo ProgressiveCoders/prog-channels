@@ -1,9 +1,10 @@
+require "dotenv/load"
+require "airrecord"
+require "slack"
+
 require_relative "channels/version"
 require_relative "channels/syncopator"
-
-require "dotenv/load"
-require "slack"
-require "airrecord"
+require_relative "channels/channel_list"
 
 module Prog
   module Channels
