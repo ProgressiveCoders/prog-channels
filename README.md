@@ -8,6 +8,10 @@ This repo includes a ruby gem providing an empty `Prog::Channels` class. The onl
 
 Copy `.env.example` to `.env` then run `ruby credentials_test.rb`. The tests therein should fail unless the `.env` file has true credentials.
 
+To run unit tests (these don't touch Slack or Airtable, they run against mocks):
+
+    rake test
+
 ## Dependencies
 
 - ["airrecord"](https://github.com/sirupsen/airrecord)
@@ -17,8 +21,11 @@ Using airrecord because the airtable/airtable gem has some glaring issues at thi
 
 ## Development
 
-The `credentials_test.rb` file shows the general direction this effort is heading in. Essentially: use the slack gem to get channel lists and info,
-then use the airtable gem (airrecord) to update the Airtable document with latest info.
+The `credentials_test.rb` file shows the general direction this effort is heading in.
+Essentially: use the slack gem to get channel lists and info, then use the airtable gem (airrecord) to update the Airtable document with latest info.
+
+Next steps: add a private method to Prog::Channels::Syncopator that loops over slack info,
+updating or creating records in Airtable.
 
 ## Contributing
 
