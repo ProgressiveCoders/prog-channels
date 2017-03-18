@@ -32,7 +32,7 @@ module Prog
 
               new_channel = @table.new({
                 "ZChannel Name"     => channel[:name],
-                "ZCreation Date"    => Time.at(channel[:created]).strftime("%Y-%m-%d"),
+                "ZCreation Date"     => Time.at(channel[:created]).strftime("%m/%d/%Y"),
                 "ZMembership Range" => channel[:num_members],
                 "ZChannel Type"     => "New",
                 "ZStatus"           => "Active",
@@ -44,7 +44,7 @@ module Prog
 
               existing_channel = @table.find(matches[0].id)
               existing_channel["ZChannel Name"]     = channel[:name]
-              existing_channel["ZCreation Date"]    = Time.at(channel[:created]).strftime("%Y-%m-%d")
+              existing_channel["ZCreation Date"]    = Time.at(channel[:created]).strftime("%m/%d/%Y")
               existing_channel["ZMembership Range"] = channel[:num_members]
               existing_channel["ZStatus"]           = "Archived" if channel[:is_archived]
             else

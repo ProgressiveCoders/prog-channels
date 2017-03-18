@@ -45,7 +45,7 @@ describe Prog::Channels::Syncopator do
       @slack_channel_list_item.expect(:[], true, [:is_archived])
 
       @existing_record.expect(:[]=, "thanks", ["ZChannel Name", "thanks"])
-      @existing_record.expect(:[]=, "thanks", ["ZCreation Date", time.strftime("%Y-%m-%d")])
+      @existing_record.expect(:[]=, "thanks", ["ZCreation Date", time.strftime("%m/%d/%Y")])
       @existing_record.expect(:[]=, "thanks", ["ZMembership Range", 2020])
       @existing_record.expect(:[]=, "thanks", ["ZStatus", "Archived"])
 
@@ -65,7 +65,7 @@ describe Prog::Channels::Syncopator do
       @params[:table].expect(:all, [], [{filter: '{Channel Name} = "thanks"'}])
       @params[:table].expect(:new, @new_record = MiniTest::Mock.new, [{
         "ZChannel Name"     => "thanks",
-        "ZCreation Date"    => time.strftime("%Y-%m-%d"),
+        "ZCreation Date"    => time.strftime("%m/%d/%Y"),
         "ZMembership Range" => 2020,
         "ZChannel Type"     => "New",
         "ZStatus"           => "Active",
