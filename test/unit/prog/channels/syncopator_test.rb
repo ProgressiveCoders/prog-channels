@@ -15,6 +15,9 @@ describe Prog::Channels::Syncopator do
     @params[:slack_client].expect(:is_a?, true, [Slack::Web::Client])
     @params[:slack_client].expect(:auth_test, @auth_test = MiniTest::Mock.new, [])
     @auth_test.expect(:ok, true, [])
+
+    @params[:slack_client].expect(:channels_list, @slack_channel_list = MiniTest::Mock.new, [])
+    @slack_channel_list.expect(:channels, [@slack_channel_list_item = MiniTest::Mock.new], [])
   end
 
   describe "as a class" do

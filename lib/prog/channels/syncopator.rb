@@ -4,8 +4,6 @@ module Prog
   module Channels
     class Syncopator < PayDirt::Base
       def initialize(options = {})
-        # sets instance variables from key value pairs,
-        # will fail if any keys given before options aren't in options
         load_options(:table, :slack_client, options) do # after loading options
           # Validate Airtable / Airrecord
           raise unless @table.kind_of?(Airrecord::Table)
@@ -17,8 +15,17 @@ module Prog
       end
 
       def call
+        syncopate
+
         return result(true, nil)
       end
+
+      private
+
+        def syncopate
+          @slack_client.channels_list.channels.each do |channel|
+          end
+        end
     end
   end
 end
