@@ -7,7 +7,6 @@ end
 
 gemfile(true) do
   source "https://rubygems.org"
-  gem "pry"
 
   gem "prog-channels", path: "."
 end
