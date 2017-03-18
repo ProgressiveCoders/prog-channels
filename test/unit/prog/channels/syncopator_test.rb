@@ -10,6 +10,8 @@ describe Prog::Channels::Syncopator do
 
     # Airtable expectations
     @params[:table].expect(:kind_of?,     true, [Airrecord::Table])
+    @params[:table].expect(:all, nil, [{filter: '{Channel Name} = "thanks"'}])
+
 
     # Slack client expectations
     @params[:slack_client].expect(:is_a?, true, [Slack::Web::Client])
@@ -18,6 +20,7 @@ describe Prog::Channels::Syncopator do
 
     @params[:slack_client].expect(:channels_list, @slack_channel_list = MiniTest::Mock.new, [])
     @slack_channel_list.expect(:channels, [@slack_channel_list_item = MiniTest::Mock.new], [])
+    @slack_channel_list_item.expect(:[], "thanks", [:name])
   end
 
   describe "as a class" do

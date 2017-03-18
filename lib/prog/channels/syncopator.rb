@@ -24,6 +24,7 @@ module Prog
 
         def syncopate
           @slack_client.channels_list.channels.each do |channel|
+            table = @table.all({filter: "{Channel Name} = \"#{channel[:name]}\""})
           end
         end
     end
