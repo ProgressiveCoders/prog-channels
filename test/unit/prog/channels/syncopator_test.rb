@@ -10,8 +10,7 @@ describe Prog::Channels::Syncopator do
 
     # Airtable expectations
     @params[:table].expect(:kind_of?,     true, [Airrecord::Table])
-    @params[:table].expect(:all, nil, [{filter: '{Channel Name} = "thanks"'}])
-
+    @params[:table].expect(:all, [@airtable_matches = MiniTest::Mock.new], [{filter: '{Channel Name} = "thanks"'}])
 
     # Slack client expectations
     @params[:slack_client].expect(:is_a?, true, [Slack::Web::Client])
