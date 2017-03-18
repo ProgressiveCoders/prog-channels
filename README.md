@@ -31,7 +31,27 @@ Unit tests run against mocks and don't touch either API.
 
 First Goal: use the slack gem to get channel lists and info, then use the airtable gem (airrecord) to update the Airtable document with latest info. :check:
 
-Next Goals: clean it up; document or automate deployment steps; automate build; release a rubygem(?); have fun :)
+Next Goals: clean it up; automate build; release a rubygem(?); have fun :)
+
+## Deployment
+
+Heroku:
+
+    git clone git@github.com:ProgressiveCoders/prog-channels.git
+    heroku create
+    heroku ps:scale web=1
+    heroku addons:create scheduler:standard
+
+Next configure the scheduler addon to run the following task as often as you like:
+
+    rake prog:channels:sync
+
+And set environment variables:
+
+    heroku config:set SLACK_API_TOKEN=xoxp-the-real-one \
+                      AIRTABLE_KEY=keyTherealone        \
+                      AIRTABLE_APP=appSomeRealOne       \
+                      AIRTABLE_BASE="Real Table Name"   \
 
 ## Contributing
 

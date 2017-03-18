@@ -11,7 +11,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = %q{ Slack / Airtable integration, parses slack channel info }
   spec.description   = %q{ Pull channels from slack, integrate with airtable }
-  spec.homepage      = "https://github.com/progcodesandbox/prog-channels"
+  spec.homepage      = "https://github.com/ProgressiveCoders/prog-channels"
 
   # Prevent pushing this gem to RubyGems.org. To allow pushes either set the 'allowed_push_host'
   # to allow pushing to a single host or delete this section to allow pushing to any host.
