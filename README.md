@@ -1,6 +1,6 @@
 # Prog::Channels
 
-[![Code Climate](https://codeclimate.com/github/ProgressiveCoders/prog-channels/badges/gpa.svg)](https://codeclimate.com/github/ProgressiveCoders/prog-channels)
+[![Code Climate](https://codeclimate.com/github/ProgressiveCoders/prog-channels/badges/gpa.svg)](https://codeclimate.com/github/ProgressiveCoders/prog-channels) [![Build Status](https://travis-ci.org/rthbound/prog-channels.svg?branch=master)](https://travis-ci.org/rthbound/prog-channels)
 
 ## Usage
 
@@ -52,6 +52,10 @@ And set environment variables:
                       AIRTABLE_KEY=keyTherealone        \
                       AIRTABLE_APP=appSomeRealOne       \
                       AIRTABLE_BASE="Real Table Name"   \
+
+Finally,
+
+    git push heroku master # might need to use --force
 
 ## Contributing
 
