@@ -38,16 +38,24 @@ describe Prog::Channels::Syncopator do
       @airtable_match.expect(:id, "rec123")
       @params[:table].expect(:find, @existing_record = MiniTest::Mock.new, ["rec123"])
 
-      time = Time.now
-      @slack_channel_list_item.expect(:[], "thanks", [:name])
-      @slack_channel_list_item.expect(:[], time, [:created])
-      @slack_channel_list_item.expect(:[], 2020, [:num_members])
-      @slack_channel_list_item.expect(:[], true, [:is_archived])
+      time    = Time.now
+      purpose = "To rage aginst the dying of the light"
 
-      @existing_record.expect(:[]=, "thanks", ["ZChannel Name", "thanks"])
-      @existing_record.expect(:[]=, "thanks", ["ZCreation Date", time.strftime("%m/%d/%Y")])
-      @existing_record.expect(:[]=, "thanks", ["ZMembership Range", 2020])
-      @existing_record.expect(:[]=, "thanks", ["ZStatus", "Archived"])
+      @slack_channel_list_item.expect(:[], "thanks", [:name])
+      @existing_record.expect(:[]=, "thanks", ["Channel Name", "thanks"])
+
+      @slack_channel_list_item.expect(:[], time, [:created])
+      @existing_record.expect(:[]=, "07/04/2017", ["Creation Date", time.strftime("%m/%d/%Y")])
+
+      @slack_channel_list_item.expect(:[], 2020, [:num_members])
+      @existing_record.expect(:[]=, 2020, ["Membership", 2020])
+
+      @slack_channel_list_item.expect(:[], @purpose = MiniTest::Mock.new, [:purpose])
+      @purpose.expect(:[], purpose, [:value])
+      @existing_record.expect(:[]=, purpose, ["Channel Purpose", purpose])
+
+      @slack_channel_list_item.expect(:[], true, [:is_archived])
+      @existing_record.expect(:[]=, "Archived", ["Status", "Archived"])
 
       result = @subject.new(@params).call
       result.successful?.must_equal true
@@ -61,14 +69,16 @@ describe Prog::Channels::Syncopator do
       @slack_channel_list_item.expect(:[], "thanks", [:name])
       @slack_channel_list_item.expect(:[], time, [:created])
       @slack_channel_list_item.expect(:[], 2020, [:num_members])
+      @slack_channel_list_item.expect(:[], { value: "To rage against the dying of the light" }, [:purpose])
 
       @params[:table].expect(:all, [], [{filter: '{Channel Name} = "thanks"'}])
       @params[:table].expect(:new, @new_record = MiniTest::Mock.new, [{
-        "ZChannel Name"     => "thanks",
-        "ZCreation Date"    => time.strftime("%m/%d/%Y"),
-        "ZMembership Range" => 2020,
-        "ZChannel Type"     => "New",
-        "ZStatus"           => "Active",
+        "Channel Name"    => "thanks",
+        "Creation Date"   => time.strftime("%m/%d/%Y"),
+        "Membership"      => 2020,
+        "Channel Type"    => "New",
+        "Status"          => "Active",
+        "Channel Purpose" => "To rage against the dying of the light",
       }])
       @new_record.expect(:create, true)
 

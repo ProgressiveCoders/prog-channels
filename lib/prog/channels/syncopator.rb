@@ -31,11 +31,12 @@ module Prog
               # create new record
 
               new_channel = @table.new({
-                "ZChannel Name"     => channel[:name],
-                "ZCreation Date"     => Time.at(channel[:created]).strftime("%m/%d/%Y"),
-                "ZMembership Range" => channel[:num_members],
-                "ZChannel Type"     => "New",
-                "ZStatus"           => "Active",
+                "Channel Name"     => channel[:name],
+                "Creation Date"    => Time.at(channel[:created]).strftime("%m/%d/%Y"),
+                "Membership"       => channel[:num_members],
+                "Channel Type"     => "New",
+                "Status"           => "Active",
+                "Channel Purpose"  => channel[:purpose][:value],
               })
 
               new_channel.create
@@ -43,10 +44,11 @@ module Prog
               # update existing record
 
               existing_channel = @table.find(matches[0].id)
-              existing_channel["ZChannel Name"]     = channel[:name]
-              existing_channel["ZCreation Date"]    = Time.at(channel[:created]).strftime("%m/%d/%Y")
-              existing_channel["ZMembership Range"] = channel[:num_members]
-              existing_channel["ZStatus"]           = "Archived" if channel[:is_archived]
+              existing_channel["Channel Name"]     = channel[:name]
+              existing_channel["Creation Date"]    = Time.at(channel[:created]).strftime("%m/%d/%Y")
+              existing_channel["Membership"]       = channel[:num_members]
+              existing_channel["Channel Purpose"]  = channel[:purpose][:value]
+              existing_channel["Status"]           = "Archived" if channel[:is_archived]
             else
               # just warn?
             end
