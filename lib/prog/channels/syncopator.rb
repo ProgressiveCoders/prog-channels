@@ -35,7 +35,7 @@ module Prog
                 "Channel Name"     => channel[:name],
                 "Creation Date"    => Time.at(channel[:created]).strftime("%m/%d/%Y"),
                 "Membership"       => channel[:num_members],
-                "Status"           => "Active",
+                "Status"           => channel[:is_archived] ? "Archived" : "Active",
                 "Channel Purpose"  => channel[:purpose][:value],
                 "Last Activity"    => Time.at(channel_details.last_read.to_f).strftime("%m/%d/%Y"),
                 "Channel Topic"    => channel_details.topic.value,

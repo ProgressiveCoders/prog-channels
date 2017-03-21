@@ -82,6 +82,7 @@ describe Prog::Channels::Syncopator do
       @slack_channel_list_item.expect(:[], "thanks", [:name])
       @slack_channel_list_item.expect(:[], time, [:created])
       @slack_channel_list_item.expect(:[], 2020, [:num_members])
+      @slack_channel_list_item.expect(:[], false, [:is_archived])
       @slack_channel_list_item.expect(:[], { value: "To rage against the dying of the light" }, [:purpose])
 
       @params[:table].expect(:all, [], [{filter: '{Channel Name} = "thanks"'}])
