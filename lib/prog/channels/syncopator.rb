@@ -37,7 +37,7 @@ module Prog
                 "Membership"       => channel[:num_members],
                 "Status"           => channel[:is_archived] ? "Archived" : "Active",
                 "Channel Purpose"  => channel[:purpose][:value],
-                "Last Activity"    => Time.at(channel_details.last_read.to_f).strftime("%m/%d/%Y"),
+                "Last Activity"    => Time.at((channel_details&.latest&.ts || channel_details&.last_read).to_f).strftime("%m/%d/%Y"),
                 "Channel Topic"    => channel_details.topic.value,
               })
 
@@ -52,7 +52,7 @@ module Prog
               existing_channel["Membership"]       = channel[:num_members]
               existing_channel["Channel Purpose"]  = channel[:purpose][:value]
               existing_channel["Status"]           = "Archived" if channel[:is_archived]
-              existing_channel["Last Activity"]    = Time.at(channel_details.last_read.to_f).strftime("%m/%d/%Y")
+              existing_channel["Last Activity"]    = Time.at((channel_details&.latest&.ts || channel_details&.last_read).to_f).strftime("%m/%d/%Y")
               existing_channel["Channel Topic"]    = channel_details.topic.value
 
               existing_channel.save
