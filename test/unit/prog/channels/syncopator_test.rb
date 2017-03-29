@@ -57,6 +57,9 @@ describe Prog::Channels::Syncopator do
       @purpose.expect(:[], purpose, [:value])
       @existing_record.expect(:[]=, purpose, ["Channel Purpose", purpose])
 
+      @channel.expect(:latest, @latest = MiniTest::Mock.new)
+      @latest.expect(:ts, nil)
+
       @slack_channel_list_item.expect(:[], true, [:is_archived])
       @existing_record.expect(:[]=, "Archived", ["Status", "Archived"])
 
@@ -88,6 +91,8 @@ describe Prog::Channels::Syncopator do
       @params[:table].expect(:all, [], [{filter: '{Channel Name} = "thanks"'}])
       @params[:slack_client].expect(:channels_info, @channel_info = MiniTest::Mock.new, [{channel: "123456789"}])
       @channel_info.expect(:channel, @channel = MiniTest::Mock.new)
+      @channel.expect(:latest, @latest = MiniTest::Mock.new)
+      @latest.expect(:ts, nil)
       @channel.expect(:last_read, time.to_i)
       @channel.expect(:topic, @topic = MiniTest::Mock.new)
       @topic.expect(:value, "Something topical")
