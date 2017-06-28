@@ -14,8 +14,8 @@ There's also a rake task that will simply run `bin/sync`:
 
     rake prog:channels:sync
 
-**Note:** Check out the comments in `.env.example` for details on where
-to get each credential for configuration.
+**Note:** Check out the comments in [`.env.example`](.env.example) for
+details on where to get each credential for configuration.
 
 ## Testing
 
