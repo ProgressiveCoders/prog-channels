@@ -14,6 +14,9 @@ There's also a rake task that will simply run `bin/sync`:
 
     rake prog:channels:sync
 
+**Note:** Check out the comments in `.env.example` for details on where
+to get each credential for configuration.
+
 ## Testing
 
 Integration tests essentially check that the tokens for Slack and for Airtable are set and are valid.
