@@ -57,7 +57,7 @@ DEPENDENCIES
   minitest (~> 5.0)
   prog-channels!
   rack
-  rake (~> 10.0)
+  rake
 
 BUNDLED WITH
    1.14.6
