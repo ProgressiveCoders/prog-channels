@@ -34,8 +34,8 @@ Gem::Specification.new do |spec|
   spec.add_dependency "dotenv"
   spec.add_dependency "airrecord", "~> 1.0.1"
   spec.add_dependency "slack-ruby-client", "~> 0.13.1"
+  spec.add_dependency "rake", "~> 10.0"
 
   spec.add_development_dependency "bundler", "~> 1.14"
-  spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "minitest", "~> 5.11.3"
 end
