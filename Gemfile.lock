@@ -5,6 +5,7 @@ PATH
       airrecord (~> 1.0.1)
       dotenv
       pay_dirt
+      rake (~> 10.0)
       slack-ruby-client (~> 0.13.1)
 
 GEM
@@ -56,7 +57,6 @@ DEPENDENCIES
   minitest (~> 5.11.3)
   prog-channels!
   rack (~> 2.0.6)
-  rake (~> 10.0)
 
 BUNDLED WITH
    1.16.1
