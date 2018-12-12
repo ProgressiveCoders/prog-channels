@@ -32,7 +32,7 @@ GEM
     multipart-post (2.0.0)
     net-http-persistent (2.9.4)
     pay_dirt (1.1.0)
-    rack (2.0.1)
+    rack (2.0.6)
     rake (10.5.0)
     slack-ruby-client (0.13.1)
       activesupport
@@ -55,7 +55,7 @@ DEPENDENCIES
   bundler (~> 1.14)
   minitest (~> 5.11.3)
   prog-channels!
-  rack
+  rack (~> 2.0.6)
   rake (~> 10.0)
 
 BUNDLED WITH
